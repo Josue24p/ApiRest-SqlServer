@@ -3,6 +3,7 @@ import config from './config'
 
 import clientesRoutes from './routes/clientes.routes'
 
+
 const app = express() //app tiene el uso del express
 
 //settings
@@ -14,5 +15,6 @@ app.use(express.urlencoded({ extended: false }));//recibe datos que viene del fo
 
 
 app.use(clientesRoutes)
+
 
 export default app //exportamos app
