@@ -1,7 +1,7 @@
 import express from 'express'//importar la librerí express
 import config from './config'
 
-import clientesRoutes from './routes/clientes.routes'
+import clientesRoutes from './routes/ventaHeader.routes'
 
 
 const app = express() //app tiene el uso del express
