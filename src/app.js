@@ -2,6 +2,7 @@ import express from 'express'//importar la librerí express
 import config from './config'
 
 import ventasHeader from './routes/ventaHeader.routes'
+import clientesRoutes from './routes/clientes.routes'
 
 const app = express() //app tiene el uso del express
 
@@ -14,5 +15,5 @@ app.use(express.urlencoded({ extended: false }));//recibe datos que viene del fo
 
 
 app.use(ventasHeader)
-
+app.use(clientesRoutes)
 export default app //exportamos app
