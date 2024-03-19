@@ -1,4 +1,5 @@
 export const queries = {
+    ///Consultas SQL para tabla VentaHeader
     getAllVentasH: 'Select * from VentaHeader',
     newVentasH: 
     'Insert into VentaHeader (SerieNumero,FechaHora,IdCliente,Subtotal,IGV,Total) VALUES(@SerieNumero,@FechaHora,@IdCliente,@Subtotal,@IGV,@Total)',
@@ -7,4 +8,13 @@ export const queries = {
     getTotalVentaH: 'Select count(*) from VentaHeader',
     updateVentaH: 
     'UPDATE VENTAHEADER SET SerieNumero=@SerieNumero,FechaHora=@FechaHora,IdCliente=@IdCliente, Subtotal=@Subtotal, IGV=@IGV, Total=@Total WHERE IdVentaH=@Id',
+    //Consulta SQL para tabla VentaDetails
+    getAllVentasD: 'Select * from VentaDetails',
+    newVentasD:
+    'Insert into VentaDetails (IdVentaH,Linea,Codigo,Descripcion,Total) VALUES (@IdventaH, @Linea, @Codigo, @Descripcion, @Total)',
+    getVentaDById: 'Select * From VentaDetails Where IdVentaD = @Id',
+    deleteVentaDById: 'Delete From VentaDetails Where IdVentaD=@Id',
+    getTotalVentaD: 'Select count(*) from VentaDetails',
+    updateVentaD:
+    'Update VentaDetails set IdVentaH=@IdventaH,Linea=@Linea,Codigo=@Codigo,Descripcion=@Descripcion,Total=@Total Where IdVentaD=@Id',
 }
