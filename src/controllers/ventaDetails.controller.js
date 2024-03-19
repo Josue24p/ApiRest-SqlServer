@@ -2,11 +2,11 @@
 //para poder realizar  consultas y manipular el lenguaje SQL
 import { getConnection, queries, sql } from "../database";
 
-//Primero creamos la función para poder conseguir los datos de la tabla VENTAHEADER
+//Primero creamos la función para poder conseguir los datos de la tabla VENTADETAILS
 export const getVentaDetails = async (req, res) => {
     try {
         const pool = await getConnection();
-        const result = await pool.request().query(queries.getAllVentasH);
+        const result = await pool.request().query(queries.getAllVentasD);
         res.json(result.recordset);
         console.log(result);
     } catch (error) {
@@ -24,18 +24,18 @@ export const getVentasDetailsById = async (req,res) =>{
     const result = await pool
     .request()
     .input('Id',id)
-    .query(queries.getVentaHById)
+    .query(queries.getVentaDById)
     console.log(result)
     res.send(result.recordset[0])
 }
 
 export const createNewVentaD = async (req,res) => {
     //variables que serán ingresadas por el cliente el body.
-    const {SerieNumero,FechaHora,IdCliente,Subtotal,IGV,Total} = req.body;
+    const {IdVentaH,Linea,Codigo,Descripcion,Total} = req.body;
 
-    if (SerieNumero == null || FechaHora == null 
-        || IdCliente == null || Subtotal == null
-        || IGV == null || Total == null) {
+    if (IdVentaH == null || Linea == null 
+        || Codigo == null || Descripcion == null ||
+        Total == null) {
         return res.status(400).json({msg: 'Petición fallida. Por favor llena todos los campos'})
     }
     try {
@@ -43,16 +43,15 @@ export const createNewVentaD = async (req,res) => {
         //Se inserta el registro
         await pool
         .request()
-        .input("SerieNumero",sql.VarChar,SerieNumero)
-        .input("FechaHora",sql.DateTime,FechaHora)
-        .input("IdCliente",sql.Int,IdCliente)
-        .input("Subtotal",sql.Decimal,Subtotal)
-        .input("IGV",sql.Decimal,IGV)
+        .input("IdVentaH",sql.Int,IdVentaH)
+        .input("Linea",sql.Int,Linea)
+        .input("Codigo",sql.VarChar,Codigo)
+        .input("Descripcion",sql.VarChar,Descripcion)
         .input("Total",sql.Decimal,Total)
-        .query(queries.newVentasH)
+        .query(queries.newVentasD)
         //Para poder probar y ver los datos en consola que se enviaran a la base de datos
-        console.log(SerieNumero,FechaHora,IdCliente,Subtotal,IGV,Total)
-        res.json({SerieNumero,FechaHora,IdCliente,Subtotal,IGV,Total}); //lo que quiero mostrar de json de respuesta en postman
+        console.log(IdVentaH,Linea,Codigo,Descripcion,Total)
+        res.json({IdVentaH,Linea,Codigo,Descripcion,Total}); //lo que quiero mostrar de json de respuesta en postman
     } catch (error) {
         res.status(500)
         res.send(error.message);
@@ -63,7 +62,7 @@ export const getTotalVentasD = async (req, res) => {
     try {
         const pool = await getConnection();
 
-        const result = await pool.request().query(queries.getTotalVentaH);
+        const result = await pool.request().query(queries.getTotalVentaD);
         console.log(result)
         res.sendStatus(204);
     } catch (error) {
@@ -82,17 +81,17 @@ export const deleteVentaDetailById = async  (req,res) =>{
     const result = await pool
     .request()
     .input("Id",id)
-    .query(queries.deleteVentaHById)
+    .query(queries.deleteVentaDById)
     //console.log(result)
     res.sendStatus(204);
 }
 
 export const updateVentaDetailsById = async  (req,res)=>{
     const {id} = req.params;
-    const {SerieNumero,FechaHora,IdCliente,Subtotal,IGV,Total} = req.body;
-    if (SerieNumero == null || FechaHora == null 
-        || IdCliente == null || Subtotal == null
-        || IGV == null || Total == null) {
+    const {IdVentaH,Linea,Codigo,Descripcion,Total} = req.body;
+    if (IdVentaH == null || Linea == null 
+        || Codigo == null || Descripcion == null ||
+        Total == null) {
         return res.status(400).json({msg: 'Petición fallida. Por favor llena todos los campos'})
     }
     try {
@@ -100,15 +99,14 @@ export const updateVentaDetailsById = async  (req,res)=>{
         await pool
         .request()
         .input('id',sql.Int,id)
-        .input('SerieNumero',sql.VarChar,SerieNumero)
-        .input('FechaHora',sql.DateTime,FechaHora)
-        .input('IdCliente',sql.Int,IdCliente)
-        .input('Subtotal', sql.Decimal,Subtotal)
-        .input('IGV',sql.Decimal,IGV)
-        .input( 'Total',sql.Decimal,Total)
-        .query(queries.updateVentaH)
+        .input("IdVentaH",sql.Int,IdVentaH)
+        .input("Linea",sql.Int,Linea)
+        .input("Codigo",sql.VarChar,Codigo)
+        .input("Descripcion",sql.VarChar,Descripcion)
+        .input("Total",sql.Decimal,Total)
+        .query(queries.updateVentaD)
 
-        res.json({SerieNumero,FechaHora,IdCliente,Subtotal,IGV,Total})
+        res.json({IdVentaH,Linea,Codigo,Descripcion,Total})
     } catch (error) {
         res.status(500);
         res.send(error.message);
