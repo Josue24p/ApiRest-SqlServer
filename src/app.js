@@ -1,8 +1,8 @@
 import express from 'express'//importar la librerí express
 import config from './config'
 
-import { ventaHeaders } from "./routes/ventaHeader.routes";
-import { ventaDetails } from "./routes/ventaDetails.routes";
+import { ventasHeaders } from "./routes/ventaHeader.routes";
+
 const app = express() //app tiene el uso del express
 
 //settings
@@ -13,8 +13,8 @@ app.use(express.json()) //permite  que los datos se envian en formato json
 app.use(express.urlencoded({ extended: false }));//recibe datos que viene del formulario html
 
 
-app.use(ventaHeaders)
-app.use(ventaDetails)
+app.use(ventasHeaders)
+
 
 
 export default app //exportamos app
